@@ -30,6 +30,7 @@ _LOG = logging.getLogger(__name__)
 REQUIREMENTS = ("pi-ina219",)
 CONFIG_SCHEMA: CerberusSchemaType = {
     "chip_addr": dict(type="integer", required=True),
+    "i2c_bus_num": dict(type="integer", required=False),
     "shunt_ohms": dict(type="float", required=False, empty=False, default=100),
     "max_amps": dict(type="float", required=False, empty=False),
     "voltage_range": dict(
@@ -71,6 +72,7 @@ class Sensor(GenericSensor):
             self.config["shunt_ohms"],
             max_expected_amps=self.config.get("max_amps"),
             address=self.config["chip_addr"],
+            i2c_bus_num=self.config["i2c_bus_num"],
         )
 
         ## Configure ina sensor with range and gain from config or default
